@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniHomes</title>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#f4f6fb;
+}
+
+header{
+background:#003a70;
+color:white;
+display:flex;
+justify-content:space-between;
+padding:15px 20px;
+align-items:center;
+}
+
+header a{
+color:white;
+text-decoration:none;
+margin-left:15px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.section{
+padding:30px 20px;
+text-align:center;
+}
+
+input, select{
+padding:10px;
+width:260px;
+border-radius:6px;
+border:1px solid #ccc;
+margin:8px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:20px;
+}
+
+.room{
+background:white;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 10px 20px rgba(0,0,0,0.08);
+cursor:pointer;
+transition:0.3s;
+}
+
+.room:hover{transform:translateY(-5px);}
+
+.room img{
+width:100%;
+height:180px;
+object-fit:cover;
+}
+
+.content{
+padding:15px;
+text-align:left;
+}
+
+.price{color:#ff6600;font-weight:bold;}
+
+/* MODAL */
+.modal{
+display:none;
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.6);
+justify-content:center;
+align-items:center;
+}
+
+.modal-content{
+background:white;
+padding:20px;
+border-radius:10px;
+width:340px;
+}
+
+button{
+background:#ff6600;
+color:white;
+border:none;
+padding:10px;
+width:100%;
+border-radius:6px;
+cursor:pointer;
+margin-top:6px;
+}
+
+.cancelBtn{
+background:#888;
+}
+
+#confirmBox{
+display:none;
+position:fixed;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+background:#28a745;
+color:white;
+padding:15px 20px;
+border-radius:8px;
+z-index:999;
+}
+
+/* GALLERY */
+.gallery{
+position:relative;
+}
+
+.gallery img{
+width:100%;
+height:200px;
+border-radius:8px;
+object-fit:cover;
+}
+
+.navBtn{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+background:transparent;
+font-size: 22px;
+color:white;
+border:none;
+padding:6px 10px;
+cursor:pointer;
+border-radius:50%;
+}
+
+.prev{left:5px;}
+.next{right:5px;}
+</style>
+</head>
+
+<body>
+
+<div id="confirmBox">Booking Confirmed! 🎉</div>
+
+<header>
+<h2>UniHomes</h2>
+<div>
+<a onclick="showHome()">Room</a>
+<a onclick="showDashboard()">My Bookings</a>
+</div>
+</header>
+
+<!-- HOME -->
+<div id="homeView" class="section">
+
+<h2>Find Your Room</h2>
+
+<input type="text" id="search" placeholder="Search universities...">
+
+<select id="typeFilter">
+<option value="">All Room Types</option>
+<option value="Shared Room">Shared Room</option>
+<option value="Standard Room">Standard Room</option>
+<option value="En-suite">En-suite</option>
+</select>
+
+<br>
+
+<label>Max Price: £<span id="priceValue">250</span></label><br>
+<input type="range" id="priceFilter" min="50" max="250" value="250">
+
+<div class="grid" id="roomList"></div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboardView" class="section" style="display:none;">
+<h2>Your Bookings</h2>
+<table border="1" width="100%">
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Room</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody id="bookingTable"></tbody>
+</table>
+</div>
+
+<!-- ROOM MODAL -->
+<div class="modal" id="roomModal">
+<div class="modal-content">
+
+<div id="roomDetails"></div>
+
+<h3>Book This Room?</h3>
+<button onclick="startBooking()">Book Now</button>
+<button class="cancelBtn" onclick="closeRoom()">Cancel</button>
+
+</div>
+</div>
+
+<!-- AUTH + BOOKING -->
+<div class="modal" id="authModal">
+<div class="modal-content">
+
+<div id="loginBox">
+<h3>Login</h3>
+<input type="text" id="loginUser" placeholder="Username">
+<input type="password" id="loginPass" placeholder="Password">
+<button onclick="login()">Login</button>
+<button class="cancelBtn" onclick="closeAuth()">Cancel</button>
+<p onclick="showSignup()" style="cursor:pointer;color:#003a70;">Create account</p>
+</div>
+
+<div id="signupBox" style="display:none;">
+<h3>Sign Up</h3>
+<input type="text" id="signupUser" placeholder="Username">
+<input type="password" id="signupPass" placeholder="Password">
+<button onclick="signup()">Sign Up</button>
+<button class="cancelBtn" onclick="closeAuth()">Cancel</button>
+<p onclick="showLogin()" style="cursor:pointer;color:#003a70;">Back to login</p>
+</div>
+
+<div id="bookingBox" style="display:none;">
+<h3>Complete Booking</h3>
+
+<input type="text" id="bookName" placeholder="Full Name">
+<input type="email" id="bookEmail" placeholder="Email">
+<input type="date" id="bookDate">
+
+<button onclick="confirmBooking()">Confirm Booking</button>
+<button class="cancelBtn" onclick="closeAuth()">Cancel</button>
+</div>
+
+</div>
+</div>
+
+<script>
+
+/* ROOMS DATA */
+const rooms = [
+{
+city:"University College London (UCL)",
+type:"Shared Room",
+price:95,
+description:"Affordable shared student room close to campus with modern furnishings.",
+features:["Free WiFi","Shared Kitchen","Study Desk","Bills Included"],
+images:[
+"https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
+"https://images.unsplash.com/photo-1560184897-ae75f418493e",
+"https://images.unsplash.com/photo-1502672260266-1c1ef2d93688"
+]
+},
+{
+city:"King's College London (KCL)",
+type:"Standard Room",
+price:150,
+description:"Comfortable standard room in central London student accommodation.",
+features:["En-suite Bathroom","High-speed WiFi","Study Area","24/7 Security"],
+images:[
+"https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
+"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267",
+"https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6"
+]
+},
+{
+city:"Imperial College London",
+type:"En-suite",
+price:180,
+description:"Premium en-suite student room with private bathroom and modern design.",
+features:["Private Bathroom","Gym Access","WiFi Included","Bills Included"],
+images:[
+"https://images.unsplash.com/photo-1501045661006-fcebe0257c3f",
+"https://images.unsplash.com/photo-1493809842364-78817add7ffb",
+"https://images.unsplash.com/photo-1505693416388-ac5ce068fe85"
+]
+}
+];
+
+let selectedRoom=null;
+let imgIndex=0;
+let sessionBookings=JSON.parse(localStorage.getItem("bookings"))||[];
+
+/* LOAD ROOMS */
+function loadRooms(){
+
+let search=$("#search").val().toLowerCase();
+let type=$("#typeFilter").val();
+let maxPrice=$("#priceFilter").val();
+
+$("#priceValue").text(maxPrice);
+$("#roomList").empty();
+
+rooms.forEach((r,i)=>{
+
+let ok=
+r.city.toLowerCase().includes(search) &&
+(type===""||r.type===type) &&
+r.price<=maxPrice;
+
+if(ok){
+$("#roomList").append(`
+<div class="room" onclick="openRoom(${i})">
+<img src="${r.images[0]}">
+<div class="content">
+<h3>${r.city}</h3>
+<p>${r.type}</p>
+<p class="price">£${r.price}/week</p>
+</div>
+</div>
+`);
+}
+
+});
+}
+
+/* ROOM */
+function openRoom(i){
+selectedRoom=rooms[i];
+imgIndex=0;
+renderRoom();
+$("#roomModal").fadeIn();
+}
+
+/* ✅ UPDATED MODAL WITH DESCRIPTION + FEATURES */
+function renderRoom(){
+$("#roomDetails").html(`
+<div class="gallery">
+<img src="${selectedRoom.images[imgIndex]}">
+
+<button class="navBtn prev" onclick="event.stopPropagation(); prevImg()">&#10094;</button>
+<button class="navBtn next" onclick="event.stopPropagation(); nextImg()">&#10095;</button>
+</div>
+
+<h3>${selectedRoom.city}</h3>
+<p>${selectedRoom.type}</p>
+<p><b>£${selectedRoom.price}/week</b></p>
+
+<p style="margin-top:10px;color:#444;">
+${selectedRoom.description}
+</p>
+
+<div style="margin-top:10px;">
+<b>Features:</b>
+<ul style="padding-left:18px;text-align:left;">
+${selectedRoom.features.map(f => `<li>${f}</li>`).join("")}
+</ul>
+</div>
+`);
+}
+
+function nextImg(){
+imgIndex=(imgIndex+1)%selectedRoom.images.length;
+renderRoom();
+}
+
+function prevImg(){
+imgIndex=(imgIndex-1+selectedRoom.images.length)%selectedRoom.images.length;
+renderRoom();
+}
+
+function closeRoom(){
+$("#roomModal").fadeOut();
+}
+
+/* BOOKING */
+function startBooking(){
+$("#authModal").fadeIn();
+
+if(localStorage.getItem("loggedUser")){
+$("#loginBox").hide();
+$("#signupBox").hide();
+$("#bookingBox").show();
+}else{
+$("#loginBox").show();
+$("#signupBox").hide();
+$("#bookingBox").hide();
+}
+}
+
+/* AUTH */
+function signup(){
+let u=$("#signupUser").val();
+let p=$("#signupPass").val();
+localStorage.setItem("user_"+u,p);
+alert("Account created");
+showLogin();
+}
+
+function login(){
+let u=$("#loginUser").val();
+let p=$("#loginPass").val();
+let saved=localStorage.getItem("user_"+u);
+
+if(saved&&saved===p){
+localStorage.setItem("loggedUser",u);
+$("#authModal").fadeOut();
+startBooking();
+}else alert("Invalid login");
+}
+
+function showSignup(){
+$("#loginBox").hide();
+$("#signupBox").show();
+}
+
+function showLogin(){
+$("#signupBox").hide();
+$("#loginBox").show();
+}
+
+function closeAuth(){
+$("#authModal").fadeOut();
+}
+
+/* BOOK */
+function confirmBooking(){
+
+let name=$("#bookName").val();
+let email=$("#bookEmail").val();
+let date=$("#bookDate").val();
+
+if(!name||!email||!date){
+alert("Fill all fields");
+return;
+}
+
+sessionBookings.push({
+name,email,date,
+room:selectedRoom.city+" - "+selectedRoom.type
+});
+
+localStorage.setItem("bookings",JSON.stringify(sessionBookings));
+
+$("#authModal").fadeOut();
+$("#roomModal").fadeOut();
+
+$("#confirmBox").fadeIn();
+setTimeout(()=>$("#confirmBox").fadeOut(),2000);
+
+loadDashboard();
+showDashboard();
+}
+
+/* DASHBOARD */
+function loadDashboard(){
+$("#bookingTable").empty();
+sessionBookings.forEach(b=>{
+$("#bookingTable").append(`
+<tr>
+<td>${b.name}</td>
+<td>${b.email}</td>
+<td>${b.room}</td>
+<td>${b.date}</td>
+</tr>
+`);
+});
+}
+
+function showDashboard(){
+$("#homeView").hide();
+$("#dashboardView").show();
+loadDashboard();
+}
+
+function showHome(){
+$("#dashboardView").hide();
+$("#homeView").show();
+}
+
+/* INIT */
+loadRooms();
+$("#search,#typeFilter,#priceFilter").on("input change",loadRooms);
+
+</script>
+
+</body>
+</html>
