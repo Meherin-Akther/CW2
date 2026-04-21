@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact - Uni Homes</title>
+
+<link rel="stylesheet" href="style-contact.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+<nav>
+    <h2>Uni Homes</h2>
+    <div>
+        <a href="index.html">Home</a>
+        <a href="rooms.html">Rooms</a>
+        <a href="contact.html">Contact</a>
+    </div>
+</nav>
+
+<section class="contact-section">
+
+<!-- LEFT SIDE -->
+<div class="left">
+
+<h1>Need Help? We're here for you.</h1>
+<p>Tell us your issue and our team will assist you quickly.</p>
+
+<form id="contactForm">
+
+<label>01 What is your full name?</label>
+<input type="text" placeholder="Enter your name">
+
+<label>02 What is your email?</label>
+<input type="email" placeholder="Enter your email">
+
+<label>03 What type of issue are you facing?</label>
+<select>
+<option>Booking Issue</option>
+<option>Payment Problem</option>
+<option>Room Not Available</option>
+<option>Technical Issue</option>
+<option>Other</option>
+</select>
+
+<label>04 Priority level?</label>
+<select>
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+<option>Urgent</option>
+</select>
+
+<label>05 Where is the issue occurring?</label>
+<select>
+<option>London</option>
+<option>Manchester</option>
+<option>Birmingham</option>
+</select>
+
+<label>06 Describe your problem</label>
+<textarea placeholder="Explain your issue clearly..."></textarea>
+
+<button type="submit" class="submit-btn">Submit Issue</button>
+
+<div id="successMsg"></div>
+
+</form>
+</div>
+
+<!-- RIGHT SIDE -->
+<div class="right">
+
+<!-- VIRTUAL CARD -->
+<div class="contact-card">
+
+<div class="card-top">
+<h2>UniHomes</h2>
+<p>Student Support Card</p>
+</div>
+
+<div class="card-body">
+<p>📧 support@unihomes.com</p>
+<p>📍 London • Manchester • Birmingham</p>
+<p>🕐 24/7 Support Available</p>
+</div>
+
+<div class="card-footer">
+<button>Contact Support</button>
+</div>
+
+</div>
+
+<div class="info">
+
+<h3 class="toggle-title">Collaboration</h3>
+<div class="toggle-content">
+<p>HUNTERS • FOXTONS • SAVILLS • DEXTERS</p>
+</div>
+
+<h3 class="toggle-title">Location</h3>
+<div class="toggle-content">
+<p>London</p>
+<p>Manchester</p>
+<p>Birmingham</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- CHAT -->
+<div id="chatToggle">💬</div>
+
+<div id="chatBox">
+<div id="chatHeader">
+AI Assistant
+<span id="closeChat">✖</span>
+</div>
+
+<div id="chatMessages"></div>
+
+<div id="chatSuggestions">
+<button>Report issue</button>
+<button>Payment problem</button>
+<button>Booking issue</button>
+<button>Contact support</button>
+</div>
+
+<div id="chatInputArea">
+<input type="text" id="chatInput" placeholder="Ask anything...">
+<button id="sendChat">Send</button>
+</div>
+</div>
+
+<script src="contact.js"></script>
+
+</body>
+</html>
