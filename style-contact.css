@@ -1,0 +1,201 @@
+body{
+margin:0;
+font-family:Arial;
+
+/* NEW PREMIUM BACKGROUND */
+background: linear-gradient(135deg, #f4f4f4 0%, #e8efff 100%);
+
+position:relative;
+overflow-x:hidden;
+}
+
+/* GLOW EFFECTS */
+body::before,
+body::after{
+content:"";
+position:fixed;
+width:400px;
+height:400px;
+border-radius:50%;
+filter:blur(120px);
+opacity:0.4;
+z-index:-1;
+animation:float 10s infinite alternate ease-in-out;
+}
+
+/* BLUE GLOW */
+body::before{
+background:#003a70;
+top:-100px;
+left:-100px;
+}
+
+/* ORANGE GLOW */
+body::after{
+background:#ff6600;
+bottom:-100px;
+right:-100px;
+animation-delay:3s;
+}
+
+@keyframes float{
+from{
+transform:translateY(0px);
+}
+to{
+transform:translateY(40px);
+}
+}
+
+nav{
+background:#003a70;
+color:white;
+display:flex;
+justify-content:space-between;
+padding:10px 20px;
+}
+
+nav a{
+color:white;
+margin:0 10px;
+text-decoration:none;
+}
+
+/* LAYOUT */
+.contact-section{
+display:flex;
+min-height:90vh;
+}
+
+.left{
+flex:1;
+background:white;
+padding:40px;
+}
+
+.right{
+flex:1;
+background:#003a70;
+color:white;
+padding:40px;
+}
+
+/* FORM */
+input,select,textarea{
+width:100%;
+padding:10px;
+margin:10px 0;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+textarea{height:100px;}
+
+button{
+background:#ff6600;
+color:white;
+border:none;
+padding:10px;
+border-radius:5px;
+cursor:pointer;
+}
+
+/* =====================
+   PREMIUM CONTACT CARD
+===================== */
+.contact-card{
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(15px);
+padding:25px;
+border-radius:15px;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+transition:0.4s;
+cursor:pointer;
+}
+
+.contact-card:hover{
+transform:translateY(-10px) scale(1.03);
+box-shadow:0 20px 50px rgba(0,0,0,0.5);
+}
+
+.card-top h2{
+margin:0;
+color:#ffcc70;
+}
+
+.card-body p{
+margin:10px 0;
+}
+
+/* TOGGLE */
+.toggle-content{
+display:none;
+}
+
+/* CHAT */
+#chatToggle{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#ff6600;
+padding:15px;
+border-radius:50%;
+color:white;
+cursor:pointer;
+}
+
+#chatBox{
+position:fixed;
+bottom:80px;
+right:20px;
+width:300px;
+height:400px;
+background:white;
+display:none;
+flex-direction:column;
+border-radius:10px;
+overflow:hidden;
+}
+
+#chatHeader{
+background:#003a70;
+color:white;
+padding:10px;
+display:flex;
+justify-content:space-between;
+}
+
+#chatMessages{
+flex:1;
+padding:10px;
+overflow:auto;
+}
+
+#chatInputArea{
+display:flex;
+}
+
+#chatInput{
+flex:1;
+padding:10px;
+border:none;
+}
+
+.user-msg{
+background:#ff6600;
+color:white;
+padding:8px;
+border-radius:10px;
+margin:5px;
+float:right;
+clear:both;
+}
+
+.bot-msg{
+background:#eee;
+padding:8px;
+border-radius:10px;
+margin:5px;
+float:left;
+clear:both;
+}
