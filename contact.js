@@ -1,59 +1,98 @@
 $(document).ready(function(){
 
-/* CHAT */
-$("#chatToggle").click(()=>$("#chatBox").fadeIn().css("display","flex"));
-$("#closeChat").click(()=>$("#chatBox").fadeOut());
-
-function addMessage(sender,text){
-let cls = sender==="user"?"user-msg":"bot-msg";
-$("#chatMessages").append(`<div class="${cls}">${text}</div>`);
-}
-
-/* BOT */
-function reply(msg){
-msg=msg.toLowerCase();
-
-if(msg.includes("payment")) return "Payment issues 💳: check your card or contact support.";
-if(msg.includes("booking")) return "Booking problems 🏠: please check availability or try again.";
-if(msg.includes("issue")) return "Please describe your issue clearly so we can assist.";
-return "I can help with issues, payments, or booking problems.";
-}
-
-/* SEND */
-$("#sendChat").click(()=>{
-let val=$("#chatInput").val();
-if(!val) return;
-addMessage("user",val);
-$("#chatInput").val("");
-
-setTimeout(()=>{
-addMessage("bot",reply(val));
-},500);
+// open chat (using fadeIn for smooth feel)
+$("#chatToggle").click(function(){
+    $("#chatBox").fadeIn().css("display","flex");
 });
 
-/* ENTER */
-$("#chatInput").keypress(e=>{
-if(e.which==13) $("#sendChat").click();
+// close chat
+$("#closeChat").click(function(){
+    $("#chatBox").fadeOut();
 });
 
-/* SUGGESTIONS */
+// add message to chat UI
+function addMsg(sender,text){
+
+    let cls = (sender==="user") ? "user-msg" : "bot-msg";
+
+    $("#chatMessages").append("<div class='"+cls+"'>"+text+"</div>");
+
+    let box = $("#chatMessages")[0];
+    box.scrollTop = box.scrollHeight;
+}
+
+// simple reply logic (basic AI simulation)
+function getReply(msg){
+
+    msg = msg.toLowerCase();
+
+    if(msg.includes("payment")){
+        return "Payment issue 💳. Our support team will contact you soon!";
+    }
+
+    if(msg.includes("booking")){
+        return "Booking issue 🏠. Our support team will contact you soon!";
+    }
+
+    if(msg.includes("issue")){
+        return "Thanks for reporting 👍 Our support team will contact you soon!";
+    }
+
+    return "I can help with booking, payment or issues. Our support team will contact you soon!";
+}
+
+// send message
+$("#sendChat").click(function(){
+
+    let val = $("#chatInput").val();
+
+    if(!val) return;
+    if(val.trim()==="") return;
+
+    addMsg("user",val);
+
+    $("#chatInput").val("");
+
+    let delay = 400 + Math.random()*300;
+
+    setTimeout(function(){
+        addMsg("bot", getReply(val));
+    },delay);
+});
+
+// enter key support
+$("#chatInput").keypress(function(e){
+    if(e.which==13){
+        $("#sendChat").click();
+    }
+});
+
+// suggestion buttons
 $("#chatSuggestions button").click(function(){
-let text=$(this).text();
-addMessage("user",text);
-setTimeout(()=>{
-addMessage("bot",reply(text));
-},500);
+
+    let text = $(this).text();
+
+    addMsg("user",text);
+
+    setTimeout(function(){
+        addMsg("bot", getReply(text));
+    },500);
 });
 
-/* FORM */
+// form submit (frontend only)
 $("#contactForm").submit(function(e){
-e.preventDefault();
-$("#successMsg").text("Issue submitted successfully!");
+    e.preventDefault();
+    $("#successMsg").text("Issue submitted successfully!");
 });
 
-/* TOGGLE */
-$(".toggle-title").click(function(){
-$(this).next().slideToggle();
+// toggle sections with fade effect
+$(".toggle-btn").click(function(){
+
+    let target = $(this).data("target");
+
+    $(".toggle-content").not("#"+target).fadeOut();
+    $("#"+target).fadeToggle();
+
 });
 
 });
