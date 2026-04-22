@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account - UniHomes</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#f4f4f4;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.box{
+background:white;
+padding:35px;
+width:340px;
+border-radius:10px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+text-align:center;
+}
+
+h2{
+color:#003a70;
+margin-bottom:15px;
+}
+
+input{
+width:100%;
+padding:10px;
+margin:8px 0;
+border-radius:5px;
+border:1px solid #ccc;
+outline:none;
+}
+
+button{
+width:100%;
+padding:10px;
+margin-top:10px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+color:white;
+font-size:15px;
+}
+
+.login-btn{
+background:#ff6600;
+}
+
+.signup-btn{
+background:#003a70;
+}
+
+.toggle{
+margin-top:10px;
+font-size:14px;
+color:#003a70;
+cursor:pointer;
+display:block;
+}
+
+.msg{
+font-size:13px;
+margin-top:10px;
+display:none;
+}
+
+.error{
+color:red;
+}
+
+.success{
+color:green;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2 id="title">Sign In</h2>
+
+<input type="text" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+
+<div class="msg" id="msg"></div>
+
+<button class="login-btn" id="actionBtn" onclick="login()">Login</button>
+
+<span class="toggle" onclick="toggleMode()">
+Don't have an account? Create one
+</span>
+
+<a href="index.html" style="display:block;margin-top:12px;color:#333;text-decoration:none;">← Back to Home</a>
+
+</div>
+
+<script>
+
+let isLogin = true;
+
+function toggleMode(){
+isLogin = !isLogin;
+
+document.getElementById("msg").style.display = "none";
+
+if(isLogin){
+document.getElementById("title").innerText = "Sign In";
+document.getElementById("actionBtn").innerText = "Login";
+document.getElementById("actionBtn").className = "login-btn";
+document.querySelector(".toggle").innerText = "Don't have an account? Create one";
+} else {
+document.getElementById("title").innerText = "Create Account";
+document.getElementById("actionBtn").innerText = "Sign Up";
+document.getElementById("actionBtn").className = "signup-btn";
+document.querySelector(".toggle").innerText = "Already have an account? Sign in";
+}
+}
+
+// LOGIN
+function login(){
+let email = document.getElementById("email").value.trim();
+let pass = document.getElementById("password").value.trim();
+
+let users = JSON.parse(localStorage.getItem("users")) || [];
+
+let user = users.find(u => u.email === email && u.password === pass);
+
+if(user){
+localStorage.setItem("isLoggedIn", "true");
+localStorage.setItem("currentUser", email);
+window.location.href = "index.html";
+} else {
+showMsg("Invalid email or password", "error");
+}
+}
+
+// SIGN UP
+function signup(){
+let email = document.getElementById("email").value.trim();
+let pass = document.getElementById("password").value.trim();
+
+if(email === "" || pass === ""){
+showMsg("Please fill all fields", "error");
+return;
+}
+
+let users = JSON.parse(localStorage.getItem("users")) || [];
+
+let exists = users.find(u => u.email === email);
+
+if(exists){
+showMsg("Account already exists", "error");
+return;
+}
+
+users.push({email, password: pass});
+localStorage.setItem("users", JSON.stringify(users));
+
+showMsg("Account created successfully!", "success");
+
+setTimeout(() => {
+toggleMode(); // switch to login
+}, 1000);
+}
+
+// BUTTON HANDLER
+document.getElementById("actionBtn").addEventListener("click", function(){
+if(isLogin){
+login();
+} else {
+signup();
+}
+});
+
+function showMsg(text, type){
+let msg = document.getElementById("msg");
+msg.style.display = "block";
+msg.innerText = text;
+msg.className = "msg " + type;
+}
+
+</script>
+
+</body>
+</html>
