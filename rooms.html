@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rooms - UniHomes</title>
+<title>UniHomes - Rooms</title>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -14,6 +14,7 @@ font-family:Arial;
 background:#f4f6fb;
 }
 
+/* HEADER */
 header{
 background:#003a70;
 color:white;
@@ -31,11 +32,13 @@ font-weight:bold;
 cursor:pointer;
 }
 
+/* SECTIONS */
 .section{
 padding:30px 20px;
 text-align:center;
 }
 
+/* INPUTS */
 input, select{
 padding:10px;
 width:260px;
@@ -44,12 +47,14 @@ border:1px solid #ccc;
 margin:8px;
 }
 
+/* ROOM GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 gap:20px;
 }
 
+/* ROOM CARD */
 .room{
 background:white;
 border-radius:12px;
@@ -74,6 +79,7 @@ text-align:left;
 
 .price{color:#ff6600;font-weight:bold;}
 
+/* MODAL */
 .modal{
 display:none;
 position:fixed;
@@ -117,6 +123,7 @@ border-radius:8px;
 z-index:999;
 }
 
+/* GALLERY */
 .gallery{position:relative;}
 
 .gallery img{
@@ -154,11 +161,11 @@ border-radius:50%;
 <a href="home.html">Home</a>
 <a href="rooms.html">Room</a>
 <a href="about.html">About</a>
-<a href="rooms.html#dashboardView">My Bookings</a>
+<a onclick="showDashboard()">My Bookings</a>
 </div>
 </header>
 
-<!-- ROOM PAGE -->
+<!-- ROOMS PAGE -->
 <div id="roomView" class="section">
 
 <h2>Find Your Room</h2>
@@ -181,7 +188,7 @@ border-radius:50%;
 </div>
 
 <!-- DASHBOARD -->
-<div id="dashboardView" class="section">
+<div id="dashboardView" class="section" style="display:none;">
 <h2>Your Bookings</h2>
 <table border="1" width="100%">
 <thead>
@@ -212,8 +219,8 @@ border-radius:50%;
 
 <div id="loginBox">
 <h3>Login</h3>
-<input type="text" id="loginUser" placeholder="Username">
-<input type="password" id="loginPass" placeholder="Password">
+<input type="text" id="loginUser">
+<input type="password" id="loginPass">
 <button onclick="login()">Login</button>
 <button class="cancelBtn" onclick="closeAuth()">Cancel</button>
 <p onclick="showSignup()" style="cursor:pointer;color:#003a70;">Create account</p>
@@ -221,8 +228,8 @@ border-radius:50%;
 
 <div id="signupBox" style="display:none;">
 <h3>Sign Up</h3>
-<input type="text" id="signupUser" placeholder="Username">
-<input type="password" id="signupPass" placeholder="Password">
+<input type="text" id="signupUser">
+<input type="password" id="signupPass">
 <button onclick="signup()">Sign Up</button>
 <button class="cancelBtn" onclick="closeAuth()">Cancel</button>
 <p onclick="showLogin()" style="cursor:pointer;color:#003a70;">Back to login</p>
@@ -230,8 +237,8 @@ border-radius:50%;
 
 <div id="bookingBox" style="display:none;">
 <h3>Complete Booking</h3>
-<input type="text" id="bookName" placeholder="Full Name">
-<input type="email" id="bookEmail" placeholder="Email">
+<input type="text" id="bookName">
+<input type="email" id="bookEmail">
 <input type="date" id="bookDate">
 <button onclick="confirmBooking()">Confirm Booking</button>
 <button class="cancelBtn" onclick="closeAuth()">Cancel</button>
@@ -242,7 +249,7 @@ border-radius:50%;
 
 <script>
 
-/* ROOM DATA */
+/* UPDATED UNIQUE IMAGES ONLY (NO REPEATS) */
 const rooms = [
 {
 city:"University College London (UCL)",
@@ -252,6 +259,8 @@ description:"Affordable shared student room close to campus.",
 features:["WiFi","Kitchen","Desk","Bills Included"],
 images:[
 "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
+"https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6",
+"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267",
 "https://images.unsplash.com/photo-1560184897-ae75f418493e"
 ]
 },
@@ -262,8 +271,10 @@ price:150,
 description:"Comfortable room in central London.",
 features:["Bathroom","WiFi","Study Area"],
 images:[
-"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267",
-"https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6"
+"https://images.unsplash.com/photo-1501045661006-fcebe0257c3f",
+"https://images.unsplash.com/photo-1493809842364-78817add7ffb",
+"https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+"https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af"
 ]
 },
 {
@@ -273,8 +284,10 @@ price:180,
 description:"Premium room with private bathroom.",
 features:["Private Bath","Gym","WiFi"],
 images:[
+"https://images.unsplash.com/photo-1505693314120-0d443867891c",
 "https://images.unsplash.com/photo-1501045661006-fcebe0257c3f",
-"https://images.unsplash.com/photo-1493809842364-78817add7ffb"
+"https://images.unsplash.com/photo-1493809842364-78817add7ffb",
+"https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6"
 ]
 }
 ];
@@ -310,7 +323,7 @@ $("#roomList").append(`
 });
 }
 
-/* ROOM MODAL */
+/* ROOM */
 function openRoom(i){
 selectedRoom=rooms[i];
 imgIndex=0;
@@ -318,7 +331,6 @@ renderRoom();
 $("#roomModal").fadeIn();
 }
 
-/* SHOW DETAILS + FEATURES */
 function renderRoom(){
 $("#roomDetails").html(`
 <div class="gallery">
@@ -326,9 +338,9 @@ $("#roomDetails").html(`
 <button class="navBtn prev" onclick="prevImg()">❮</button>
 <button class="navBtn next" onclick="nextImg()">❯</button>
 </div>
+
 <h3>${selectedRoom.city}</h3>
 <p>${selectedRoom.type}</p>
-<p><b>£${selectedRoom.price}/week</b></p>
 <p>${selectedRoom.description}</p>
 <p><b>Features:</b> ${selectedRoom.features.join(", ")}</p>
 `);
@@ -376,8 +388,6 @@ let name=$("#bookName").val();
 let email=$("#bookEmail").val();
 let date=$("#bookDate").val();
 
-if(!name||!email||!date){alert("Fill all fields");return;}
-
 sessionBookings.push({
 name,email,date,
 room:selectedRoom.city+" - "+selectedRoom.type
@@ -404,6 +414,12 @@ $("#bookingTable").append(`
 </tr>
 `);
 });
+}
+
+function showDashboard(){
+$("#roomView,#authModal,#roomModal").hide();
+$("#dashboardView").show();
+loadDashboard();
 }
 
 /* INIT */
