@@ -63,7 +63,7 @@
 <label>06 Describe your problem</label>
 <textarea placeholder="Explain your issue clearly..."></textarea>
 
-<button type="submit" class="submit-btn">Submit Issue</button>
+<button type="submit">Submit Request</button>
 
 <div id="successMsg"></div>
 
@@ -73,9 +73,7 @@
 <!-- RIGHT SIDE -->
 <div class="right">
 
-<!-- VIRTUAL CARD -->
 <div class="contact-card">
-
 <div class="card-top">
 <h2>UniHomes</h2>
 <p>Student Support Card</p>
@@ -86,25 +84,37 @@
 <p>📍 London • Manchester • Birmingham</p>
 <p>🕐 24/7 Support Available</p>
 </div>
-
-<div class="card-footer">
-<button>Contact Support</button>
-</div>
-
 </div>
 
 <div class="info">
 
-<h3 class="toggle-title">Collaboration</h3>
-<div class="toggle-content">
-<p>HUNTERS • FOXTONS • SAVILLS • DEXTERS</p>
+<h3 class="toggle-btn" data-target="collabContent">
+Collaboration & Branding Partners
+</h3>
+
+<div class="toggle-content" id="collabContent">
+
+<div class="horizontal-slider">
+<div class="slide-track">
+<span>DEXTERS</span>
+<span>KNIGHT FRANK</span>
+<span>HUNTERS</span>
+<span>FOXTONS</span>
+<span>SAVILLS</span>
+<span>DEXTERS</span>
+</div>
 </div>
 
-<h3 class="toggle-title">Location</h3>
-<div class="toggle-content">
-<p>London</p>
-<p>Manchester</p>
-<p>Birmingham</p>
+</div>
+
+<h3 class="toggle-btn" data-target="locationContent">
+Location
+</h3>
+
+<div class="toggle-content" id="locationContent">
+<p>London, UK</p>
+<p>Manchester, UK</p>
+<p>Birmingham, UK</p>
 </div>
 
 </div>
@@ -113,28 +123,34 @@
 
 </section>
 
-<!-- CHAT -->
-<div id="chatToggle">💬</div>
+<!-- CHAT BUTTON -->
+<div id="chatToggle">
+    💬
+    <span class="ripple"></span>
+</div>
 
+<!-- FIXED: CHAT BOX WRAPPER ADDED (THIS WAS MISSING) -->
 <div id="chatBox">
-<div id="chatHeader">
-AI Assistant
-<span id="closeChat">✖</span>
-</div>
 
-<div id="chatMessages"></div>
+    <div id="chatHeader">
+        <span>AI Support</span>
+        <button id="closeChat">✖</button>
+    </div>
 
-<div id="chatSuggestions">
-<button>Report issue</button>
-<button>Payment problem</button>
-<button>Booking issue</button>
-<button>Contact support</button>
-</div>
+    <div id="chatMessages"></div>
 
-<div id="chatInputArea">
-<input type="text" id="chatInput" placeholder="Ask anything...">
-<button id="sendChat">Send</button>
-</div>
+    <div id="chatSuggestions">
+        <button>Report issue</button>
+        <button>Payment problem</button>
+        <button>Booking issue</button>
+        <button>Contact support</button>
+    </div>
+
+    <div id="chatInputArea">
+        <input type="text" id="chatInput" placeholder="Ask anything...">
+        <button id="sendChat">Send</button>
+    </div>
+
 </div>
 
 <script src="contact.js"></script>
