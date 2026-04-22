@@ -4,184 +4,164 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UniHomes - Rooms</title>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <style>
-body{
-margin:0;
-font-family:Arial;
-background:#f4f6fb;
-}
+body{ margin:0; font-family:Arial; background:#f4f6fb; }
 
 /* HEADER */
 header{
-background:#003a70;
-color:white;
-display:flex;
-justify-content:space-between;
-padding:15px 20px;
-align-items:center;
+ background:#003a70;
+ color:white;
+ display:flex;
+ justify-content:space-between;
+ padding:15px 20px;
+ align-items:center;
 }
-
 header a{
-color:white;
-text-decoration:none;
-margin-left:15px;
-font-weight:bold;
-cursor:pointer;
+ color:white;
+ text-decoration:none;
+ margin-left:15px;
+ font-weight:bold;
+ cursor:pointer;
 }
 
 /* SECTIONS */
 .section{
-padding:30px 20px;
-text-align:center;
+ padding:30px 20px;
+ text-align:center;
 }
 
 /* INPUTS */
 input, select{
-padding:10px;
-width:260px;
-border-radius:6px;
-border:1px solid #ccc;
-margin:8px;
+ padding:10px;
+ width:260px;
+ border-radius:6px;
+ border:1px solid #ccc;
+ margin:8px;
 }
 
 /* ROOM GRID */
 .grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:20px;
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+ gap:20px;
 }
 
 /* ROOM CARD */
 .room{
-background:white;
-border-radius:12px;
-overflow:hidden;
-box-shadow:0 10px 20px rgba(0,0,0,0.08);
-cursor:pointer;
-transition:0.3s;
+ background:white;
+ border-radius:12px;
+ overflow:hidden;
+ box-shadow:0 10px 20px rgba(0,0,0,0.08);
+ cursor:pointer;
+ transition:0.3s;
 }
-
 .room:hover{transform:translateY(-5px);}
-
 .room img{
-width:100%;
-height:180px;
-object-fit:cover;
+ width:100%;
+ height:180px;
+ object-fit:cover;
 }
-
 .content{
-padding:15px;
-text-align:left;
+ padding:15px;
+ text-align:left;
 }
-
 .price{color:#ff6600;font-weight:bold;}
 
 /* MODAL */
 .modal{
-display:none;
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:rgba(0,0,0,0.6);
-justify-content:center;
-align-items:center;
+ display:none;
+ position:fixed;
+ top:0;left:0;
+ width:100%;height:100%;
+ background:rgba(0,0,0,0.6);
+ justify-content:center;
+ align-items:center;
 }
-
 .modal-content{
-background:white;
-padding:20px;
-border-radius:10px;
-width:340px;
+ background:white;
+ padding:20px;
+ border-radius:10px;
+ width:340px;
 }
 
 button{
-background:#ff6600;
-color:white;
-border:none;
-padding:10px;
-width:100%;
-border-radius:6px;
-cursor:pointer;
-margin-top:6px;
+ background:#ff6600;
+ color:white;
+ border:none;
+ padding:10px;
+ width:100%;
+ border-radius:6px;
+ cursor:pointer;
+ margin-top:6px;
 }
-
 .cancelBtn{background:#888;}
 
 #confirmBox{
-display:none;
-position:fixed;
-top:20px;
-left:50%;
-transform:translateX(-50%);
-background:#28a745;
-color:white;
-padding:15px 20px;
-border-radius:8px;
-z-index:999;
+ display:none;
+ position:fixed;
+ top:20px;
+ left:50%;
+ transform:translateX(-50%);
+ background:#28a745;
+ color:white;
+ padding:15px 20px;
+ border-radius:8px;
+ z-index:999;
 }
 
 /* GALLERY */
 .gallery{position:relative;}
-
 .gallery img{
-width:100%;
-height:200px;
-border-radius:8px;
-object-fit:cover;
+ width:100%;
+ height:200px;
+ border-radius:8px;
+ object-fit:cover;
 }
-
 .navBtn{
-position:absolute;
-top:50%;
-transform:translateY(-50%);
-background:rgba(0,0,0,0.5);
-color:white;
-border:none;
-padding:6px 10px;
-cursor:pointer;
-border-radius:50%;
+ position:absolute;
+ top:50%;
+ transform:translateY(-50%);
+ background:rgba(0,0,0,0.5);
+ color:white;
+ border:none;
+ padding:6px 10px;
+ cursor:pointer;
+ border-radius:50%;
 }
-
 .prev{left:5px;}
 .next{right:5px;}
 
 /* DASHBOARD */
-#dashboardView{
-background:#f4f6fb;
-}
+#dashboardView{ background:#f4f6fb; }
 
 #bookingTable{
-width:100%;
-border-collapse:collapse;
-margin-top:20px;
-background:white;
-border-radius:10px;
-overflow:hidden;
-box-shadow:0 8px 20px rgba(0,0,0,0.08);
+ width:100%;
+ border-collapse:collapse;
+ margin-top:20px;
+ background:white;
+ border-radius:10px;
+ overflow:hidden;
+ box-shadow:0 8px 20px rgba(0,0,0,0.08);
 }
-
 #bookingTable th{
-background:#003a70;
-color:white;
-padding:12px;
-text-transform:uppercase;
-font-size:13px;
-letter-spacing:1px;
+ background:#003a70;
+ color:white;
+ padding:12px;
+ text-transform:uppercase;
+ font-size:13px;
+ letter-spacing:1px;
 }
-
 #bookingTable td{
-padding:12px;
-border-bottom:1px solid #eee;
-font-size:14px;
-color:#333;
+ padding:12px;
+ border-bottom:1px solid #eee;
+ font-size:14px;
+ color:#333;
 }
-
 #bookingTable tr:hover{
-background:#f0f6ff;
-transition:0.2s;
+ background:#f0f6ff;
+ transition:0.2s;
 }
 </style>
 </head>
@@ -201,7 +181,6 @@ transition:0.2s;
 </header>
 
 <div id="roomView" class="section">
-
 <h2>Find Your Room</h2>
 
 <input type="text" id="search" placeholder="Search universities...">
@@ -222,12 +201,10 @@ transition:0.2s;
 </div>
 
 <div id="dashboardView" class="section" style="display:none;">
-
 <h2>Your Bookings</h2>
 
 <div style="max-width:1000px;margin:auto;">
-
-<table id="bookingTable" border="0">
+<table id="bookingTable">
 <thead>
 <tr>
 <th>Name</th>
@@ -238,10 +215,10 @@ transition:0.2s;
 </thead>
 <tbody id="bookingTableBody"></tbody>
 </table>
-
 </div>
 </div>
 
+<!-- MODALS -->
 <div class="modal" id="roomModal">
 <div class="modal-content">
 <div id="roomDetails"></div>
@@ -272,18 +249,13 @@ transition:0.2s;
 <p onclick="showLogin()" style="cursor:pointer;color:#003a70;">Back to login</p>
 </div>
 
-<!-- ✅ ONLY CHANGE: labels added here -->
+<!-- ✅ ONLY CHANGE -->
 <div id="bookingBox" style="display:none;">
 <h3>Complete Booking</h3>
 
-<label style="display:block;text-align:left;margin-left:8px;font-weight:bold;">Full Name</label>
-<input type="text" id="bookName">
-
-<label style="display:block;text-align:left;margin-left:8px;font-weight:bold;">Email Address</label>
-<input type="email" id="bookEmail">
-
-<label style="display:block;text-align:left;margin-left:8px;font-weight:bold;">Select Date</label>
-<input type="date" id="bookDate">
+<input type="text" id="bookName" placeholder="Enter your full name">
+<input type="email" id="bookEmail" placeholder="Enter your email address">
+<input type="date" id="bookDate" placeholder="Select booking date">
 
 <button onclick="confirmBooking()">Confirm Booking</button>
 <button class="cancelBtn" onclick="closeAuth()">Cancel</button>
@@ -375,7 +347,6 @@ $("#roomDetails").html(`
 <button class="navBtn prev" onclick="prevImg()">❮</button>
 <button class="navBtn next" onclick="nextImg()">❯</button>
 </div>
-
 <h3>${selectedRoom.city}</h3>
 <p>${selectedRoom.type}</p>
 <p>${selectedRoom.description}</p>
@@ -407,6 +378,7 @@ showLogin();
 function login(){
 let u=$("#loginUser").val();
 let p=$("#loginPass").val();
+
 if(localStorage.getItem("user_"+u)===p){
 localStorage.setItem("loggedUser",u);
 $("#authModal").fadeOut();
@@ -419,7 +391,6 @@ function showLogin(){$("#signupBox").hide();$("#loginBox").show();}
 function closeAuth(){$("#authModal").fadeOut();}
 
 function confirmBooking(){
-
 let name=$("#bookName").val();
 let email=$("#bookEmail").val();
 let date=$("#bookDate").val();
@@ -438,7 +409,6 @@ localStorage.setItem("bookings",JSON.stringify(sessionBookings));
 
 $("#authModal").fadeOut();
 $("#roomModal").fadeOut();
-
 $("#confirmBox").fadeIn();
 setTimeout(()=>$("#confirmBox").fadeOut(),2000);
 
@@ -468,6 +438,7 @@ loadDashboard();
 
 loadRooms();
 loadDashboard();
+
 $("#search,#typeFilter,#priceFilter").on("input change",loadRooms);
 
 </script>
