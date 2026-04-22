@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us - UniHomes</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:#f6f7fb;
+color:#333;
+}
+
+/* HEADER */
+header{
+background:#003a70;
+color:white;
+padding:20px;
+text-align:center;
+font-size:22px;
+font-weight:bold;
+}
+
+/* HERO */
+.hero{
+background:url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267') center/cover;
+height:45vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+color:white;
+}
+
+.hero div{
+background:rgba(0,0,0,0.6);
+padding:25px;
+border-radius:12px;
+}
+
+/* SECTION */
+.section{
+padding:60px 20px;
+max-width:1000px;
+margin:auto;
+text-align:center;
+opacity:0;
+transform:translateY(40px);
+transition:all 0.7s ease;
+}
+
+.section.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* BOX */
+.box{
+background:white;
+padding:20px;
+margin:10px;
+border-radius:10px;
+display:inline-block;
+box-shadow:0 5px 15px rgba(0,0,0,0.08);
+transition:0.3s;
+}
+
+.box:hover{
+transform:translateY(-6px);
+}
+
+/* TIMELINE */
+.timeline{
+max-width:700px;
+margin:40px auto;
+text-align:left;
+}
+
+.timeline-item{
+background:white;
+padding:15px;
+margin-bottom:15px;
+border-left:4px solid #003a70;
+cursor:pointer;
+transition:0.3s;
+}
+
+.timeline-item:hover{
+background:#eef4ff;
+transform:translateX(8px);
+}
+
+/* =========================
+   TRUSTED BADGES
+========================= */
+.trusted{
+margin-top:20px;
+}
+
+.trusted span{
+background:#003a70;
+color:white;
+padding:8px 14px;
+border-radius:20px;
+margin:5px;
+display:inline-block;
+font-size:14px;
+transition:0.3s;
+}
+
+.trusted span:hover{
+background:#ffcc70;
+color:#003a70;
+transform:scale(1.1);
+}
+
+/* =========================
+   PARTNER MARQUEE
+========================= */
+.partners-wrapper{
+background:#003a70;
+color:white;
+padding:50px 0;
+margin-top:40px;
+overflow:hidden;
+position:relative;
+}
+
+.partners-title{
+text-align:center;
+margin-bottom:20px;
+font-size:22px;
+font-weight:bold;
+}
+
+.partners-track{
+display:flex;
+gap:40px;
+white-space:nowrap;
+animation:scroll 18s linear infinite;
+}
+
+.partner{
+background:white;
+color:#003a70;
+padding:12px 18px;
+border-radius:25px;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+text-decoration:none;
+}
+
+.partner:hover{
+background:#ffcc70;
+transform:scale(1.1);
+}
+
+/* MARQUEE ANIMATION */
+@keyframes scroll{
+0%{transform:translateX(100%);}
+100%{transform:translateX(-100%);}
+}
+
+/* FOOTER */
+footer{
+background:#111;
+color:white;
+padding:20px;
+text-align:center;
+margin-top:40px;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+UniHomes - About Us
+</header>
+
+<!-- HERO -->
+<div class="hero">
+<div>
+<h1>We Help Students Find Better Homes</h1>
+<p>Safe • Affordable • Verified Accommodation Across the UK</p>
+</div>
+</div>
+
+<!-- ABOUT -->
+<div class="section">
+<h2>Who We Are</h2>
+<p>We connect students with safe and affordable rooms across the UK.</p>
+
+<div class="box">10,000+ Students</div>
+<div class="box">2,000+ Rooms</div>
+<div class="box">50+ Cities</div>
+</div>
+
+<!-- FEATURES -->
+<div class="section">
+<h2>Why Choose Us</h2>
+
+<div class="box">✔ Verified Rooms</div>
+<div class="box">✔ Affordable Prices</div>
+<div class="box">✔ Easy Booking</div>
+<div class="box">✔ 24/7 Support</div>
+
+<!-- TRUSTED BADGES -->
+<div class="trusted">
+<h3>Trusted By</h3>
+<span>Students UK</span>
+<span>University Housing Network</span>
+<span>UK Property Trust</span>
+</div>
+
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section">
+<h2>How It Works</h2>
+
+<div class="timeline">
+
+<div class="timeline-item" onclick="goSearch()">
+<b>1. Search</b> – Find rooms near your university.
+</div>
+
+<div class="timeline-item" onclick="goRooms()">
+<b>2. Compare</b> – Check rooms & prices.
+</div>
+
+<div class="timeline-item" onclick="goRooms('book')">
+<b>3. Book</b> – Secure your room.
+</div>
+
+</div>
+</div>
+
+<!-- VISION -->
+<div class="section">
+<h2>Our Vision</h2>
+<p>To make student housing simple, safe, and stress-free across the UK.</p>
+</div>
+
+<!-- =========================
+     PARTNERS MARQUEE
+========================= -->
+<div class="partners-wrapper">
+
+<div class="partners-title">
+Collaboration & Branding Partners
+</div>
+
+<div class="partners-track">
+
+<a class="partner" href="https://www.hunters.com" target="_blank">HUNTERS</a>
+<a class="partner" href="https://www.foxtons.co.uk" target="_blank">FOXTONS</a>
+<a class="partner" href="https://www.savills.co.uk" target="_blank">SAVILLS</a>
+<a class="partner" href="https://www.dexters.co.uk" target="_blank">DEXTERS</a>
+<a class="partner" href="https://www.knightfrank.co.uk" target="_blank">KNIGHT FRANK</a>
+
+<!-- duplicate for smooth loop -->
+<a class="partner" href="https://www.hunters.com" target="_blank">HUNTERS</a>
+<a class="partner" href="https://www.foxtons.co.uk" target="_blank">FOXTONS</a>
+<a class="partner" href="https://www.savills.co.uk" target="_blank">SAVILLS</a>
+<a class="partner" href="https://www.dexters.co.uk" target="_blank">DEXTERS</a>
+<a class="partner" href="https://www.knightfrank.co.uk" target="_blank">KNIGHT FRANK</a>
+
+</div>
+</div>
+
+<footer>
+© 2026 UniHomes. All rights reserved.
+</footer>
+
+<!-- JS -->
+<script>
+
+// FADE IN ON SCROLL
+const sections = document.querySelectorAll('.section');
+
+function reveal(){
+    const trigger = window.innerHeight * 0.8;
+
+    sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+
+        if(top < trigger && top > -200){
+            sec.classList.add("show");
+        } else {
+            sec.classList.remove("show");
+        }
+    });
+}
+
+window.addEventListener("scroll", reveal);
+reveal();
+
+// NAVIGATION
+function goSearch(){
+    window.location.href = "index.html?openSearch=true";
+}
+
+function goRooms(action){
+    if(action === "book"){
+        window.location.href = "rooms.html?book=true";
+    } else {
+        window.location.href = "rooms.html";
+    }
+}
+
+</script>
+
+</body>
+</html>
