@@ -1,2 +1,0 @@
-This is my first Linux file.
-I am learning Linux.
