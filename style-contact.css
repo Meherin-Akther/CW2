@@ -1,15 +1,15 @@
+/* main background (kept gradient, added glow later to improve look) */
 body{
 margin:0;
 font-family:Arial;
-
-/* NEW PREMIUM BACKGROUND */
 background: linear-gradient(135deg, #f4f4f4 0%, #e8efff 100%);
 
+/* added later when page felt too plain */
 position:relative;
 overflow-x:hidden;
 }
 
-/* GLOW EFFECTS */
+/* glow effect (tested a few colors, this felt balanced) */
 body::before,
 body::after{
 content:"";
@@ -23,14 +23,14 @@ z-index:-1;
 animation:float 10s infinite alternate ease-in-out;
 }
 
-/* BLUE GLOW */
+/* blue glow */
 body::before{
 background:#003a70;
 top:-100px;
 left:-100px;
 }
 
-/* ORANGE GLOW */
+/* orange glow */
 body::after{
 background:#ff6600;
 bottom:-100px;
@@ -39,14 +39,11 @@ animation-delay:3s;
 }
 
 @keyframes float{
-from{
-transform:translateY(0px);
-}
-to{
-transform:translateY(40px);
-}
+from{ transform:translateY(0); }
+to{ transform:translateY(40px); }
 }
 
+/* NAVBAR */
 nav{
 background:#003a70;
 color:white;
@@ -67,12 +64,14 @@ display:flex;
 min-height:90vh;
 }
 
+/* LEFT SIDE */
 .left{
 flex:1;
 background:white;
 padding:40px;
 }
 
+/* RIGHT SIDE */
 .right{
 flex:1;
 background:#003a70;
@@ -91,6 +90,7 @@ border:1px solid #ccc;
 
 textarea{height:100px;}
 
+/* BUTTONS */
 button{
 background:#ff6600;
 color:white;
@@ -98,41 +98,69 @@ border:none;
 padding:10px;
 border-radius:5px;
 cursor:pointer;
+transition:0.3s;
 }
 
-/* =====================
-   PREMIUM CONTACT CARD
-===================== */
+/* CONTACT CARD */
 .contact-card{
 background:rgba(255,255,255,0.1);
 backdrop-filter:blur(15px);
 padding:25px;
 border-radius:15px;
 box-shadow:0 10px 30px rgba(0,0,0,0.3);
-transition:0.4s;
-cursor:pointer;
+transition:all 0.4s ease;
 }
 
+/* hover (already had, just slightly tuned earlier) */
 .contact-card:hover{
 transform:translateY(-10px) scale(1.03);
 box-shadow:0 20px 50px rgba(0,0,0,0.5);
 }
 
-.card-top h2{
-margin:0;
-color:#ffcc70;
-}
-
-.card-body p{
-margin:10px 0;
-}
-
 /* TOGGLE */
 .toggle-content{
 display:none;
+margin-top:10px;
 }
 
-/* CHAT */
+/* toggle titles */
+.toggle-btn{
+cursor:pointer;
+margin-top:20px;
+transition:0.3s;
+}
+
+/* added hover after testing UI */
+.toggle-btn:hover{
+color:#ffcc70;
+transform:translateX(5px);
+}
+
+/* SLIDER */
+.horizontal-slider{
+overflow:hidden;
+white-space:nowrap;
+}
+
+.slide-track{
+display:inline-block;
+animation:slideLeft 12s linear infinite;
+}
+
+.slide-track span{
+display:inline-block;
+margin-right:40px;
+font-weight:bold;
+}
+
+@keyframes slideLeft{
+0%{ transform:translateX(100%); }
+100%{ transform:translateX(-100%); }
+}
+
+/* =========================
+   ADVANCED CHAT BUTTON
+   ========================= */
 #chatToggle{
 position:fixed;
 bottom:20px;
@@ -142,8 +170,78 @@ padding:15px;
 border-radius:50%;
 color:white;
 cursor:pointer;
+transition:0.3s;
+
+/* added floating later */
+animation:floatBtn 3s ease-in-out infinite;
+overflow:hidden; /* needed for ripple */
 }
 
+/* floating motion (subtle) */
+@keyframes floatBtn{
+0%{ transform:translateY(0); }
+50%{ transform:translateY(-6px); }
+100%{ transform:translateY(0); }
+}
+
+/* hover improvement */
+#chatToggle:hover{
+transform:scale(1.1);
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* ripple element */
+#chatToggle .ripple{
+position:absolute;
+width:100%;
+height:100%;
+border-radius:50%;
+background:rgba(255,255,255,0.4);
+top:0;
+left:0;
+transform:scale(0);
+opacity:0;
+pointer-events:none;
+}
+
+/* ripple animation trigger */
+#chatToggle:active .ripple{
+animation:rippleEffect 0.6s ease-out;
+}
+
+/* ripple animation */
+@keyframes rippleEffect{
+0%{
+transform:scale(0);
+opacity:0.6;
+}
+100%{
+transform:scale(2.5);
+opacity:0;
+}
+}
+
+/* glow pulse (added after testing, looks nice idle) */
+#chatToggle::after{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+border-radius:50%;
+top:0;
+left:0;
+background:rgba(255,102,0,0.4);
+z-index:-1;
+animation:glowPulse 2.5s infinite;
+}
+
+@keyframes glowPulse{
+0%{ transform:scale(1); opacity:0.5; }
+50%{ transform:scale(1.4); opacity:0.2; }
+100%{ transform:scale(1); opacity:0.5; }
+}
+
+/* CHAT BOX */
 #chatBox{
 position:fixed;
 bottom:80px;
@@ -155,6 +253,12 @@ display:none;
 flex-direction:column;
 border-radius:10px;
 overflow:hidden;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* slight hover (tested, kept subtle) */
+#chatBox:hover{
+box-shadow:0 15px 40px rgba(0,0,0,0.4);
 }
 
 #chatHeader{
@@ -169,6 +273,25 @@ justify-content:space-between;
 flex:1;
 padding:10px;
 overflow:auto;
+display:flex;
+flex-direction:column;
+}
+
+.user-msg{
+background:#ff6600;
+color:white;
+padding:8px;
+border-radius:10px;
+margin:5px;
+align-self:flex-end;
+}
+
+.bot-msg{
+background:#eee;
+padding:8px;
+border-radius:10px;
+margin:5px;
+align-self:flex-start;
 }
 
 #chatInputArea{
@@ -181,21 +304,26 @@ padding:10px;
 border:none;
 }
 
-.user-msg{
-background:#ff6600;
-color:white;
+/* suggestions */
+#chatSuggestions{
+display:flex;
+flex-wrap:wrap;
+gap:5px;
 padding:8px;
-border-radius:10px;
-margin:5px;
-float:right;
-clear:both;
 }
 
-.bot-msg{
+/* suggestion buttons */
+#chatSuggestions button{
 background:#eee;
-padding:8px;
-border-radius:10px;
-margin:5px;
-float:left;
-clear:both;
+color:#333;
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
+transition:0.3s;
+}
+
+/* hover added later */
+#chatSuggestions button:hover{
+background:#ff6600;
+color:white;
 }
