@@ -11,16 +11,43 @@ margin:0;
 font-family:Arial, sans-serif;
 background:#f6f7fb;
 color:#333;
+line-height:1.6;
 }
 
 /* HEADER */
 header{
 background:#003a70;
 color:white;
-padding:20px;
-text-align:center;
-font-size:22px;
+padding:15px 30px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+}
+
+.logo{
+font-size:20px;
 font-weight:bold;
+}
+
+nav{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-weight:600;
+padding:6px 10px;
+border-radius:5px;
+transition:0.3s;
+}
+
+nav a:hover{
+background:#ffcc70;
+color:#003a70;
 }
 
 /* HERO */
@@ -35,17 +62,15 @@ color:white;
 }
 
 .hero div{
-background:rgba(0,0,0,0.6);
-padding:25px;
+background:rgba(0,0,0,0.65);
+padding:25px 30px;
 border-radius:12px;
+max-width:700px;
 }
 
-/* SECTION */
+/* FADE ANIMATION (RESTORED PROPERLY) */
 .section{
-padding:60px 20px;
-max-width:1000px;
-margin:auto;
-text-align:center;
+margin-bottom:50px;
 opacity:0;
 transform:translateY(40px);
 transition:all 0.7s ease;
@@ -56,109 +81,106 @@ opacity:1;
 transform:translateY(0);
 }
 
-/* BOX */
-.box{
+/* CONTAINER */
+.container{
+max-width:1100px;
+margin:auto;
+padding:40px 20px;
+text-align:center;
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-top:20px;
+}
+
+.card{
 background:white;
 padding:20px;
-margin:10px;
 border-radius:10px;
-display:inline-block;
 box-shadow:0 5px 15px rgba(0,0,0,0.08);
 transition:0.3s;
 }
 
-.box:hover{
-transform:translateY(-6px);
+.card:hover{
+transform:translateY(-5px);
 }
 
-/* TIMELINE */
-.timeline{
-max-width:700px;
-margin:40px auto;
-text-align:left;
+/* TRUST BADGES */
+.badges{
+margin-top:15px;
 }
 
-.timeline-item{
-background:white;
-padding:15px;
-margin-bottom:15px;
-border-left:4px solid #003a70;
-cursor:pointer;
-transition:0.3s;
-}
-
-.timeline-item:hover{
-background:#eef4ff;
-transform:translateX(8px);
-}
-
-/* =========================
-   TRUSTED BADGES
-========================= */
-.trusted{
-margin-top:20px;
-}
-
-.trusted span{
+.badges span{
+display:inline-block;
 background:#003a70;
 color:white;
 padding:8px 14px;
 border-radius:20px;
 margin:5px;
-display:inline-block;
-font-size:14px;
+font-size:13px;
 transition:0.3s;
 }
 
-.trusted span:hover{
+.badges span:hover{
 background:#ffcc70;
 color:#003a70;
-transform:scale(1.1);
 }
 
-/* =========================
-   PARTNER MARQUEE
-========================= */
-.partners-wrapper{
+/* TIMELINE */
+.timeline{
+text-align:left;
+max-width:700px;
+margin:30px auto;
+}
+
+.step{
+background:white;
+padding:15px;
+margin-bottom:12px;
+border-left:4px solid #003a70;
+border-radius:6px;
+transition:0.3s;
+}
+
+.step:hover{
+transform:translateX(5px);
+background:#eef4ff;
+}
+
+/* PARTNERS */
+.partners{
 background:#003a70;
 color:white;
-padding:50px 0;
-margin-top:40px;
+padding:40px 20px;
 overflow:hidden;
-position:relative;
 }
 
-.partners-title{
-text-align:center;
-margin-bottom:20px;
-font-size:22px;
-font-weight:bold;
-}
-
-.partners-track{
+.track{
 display:flex;
-gap:40px;
-white-space:nowrap;
+gap:30px;
 animation:scroll 18s linear infinite;
+white-space:nowrap;
+justify-content:center;
 }
 
 .partner{
 background:white;
 color:#003a70;
-padding:12px 18px;
-border-radius:25px;
-font-weight:bold;
-cursor:pointer;
-transition:0.3s;
+padding:10px 15px;
+border-radius:20px;
 text-decoration:none;
+font-weight:bold;
+transition:0.3s;
 }
 
 .partner:hover{
 background:#ffcc70;
-transform:scale(1.1);
 }
 
-/* MARQUEE ANIMATION */
 @keyframes scroll{
 0%{transform:translateX(100%);}
 100%{transform:translateX(-100%);}
@@ -168,8 +190,8 @@ transform:scale(1.1);
 footer{
 background:#111;
 color:white;
-padding:20px;
 text-align:center;
+padding:20px;
 margin-top:40px;
 }
 </style>
@@ -178,45 +200,56 @@ margin-top:40px;
 
 <body>
 
+<!-- HEADER -->
 <header>
-UniHomes - About Us
+<div class="logo">UniHomes</div>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="rooms.html">Rooms</a>
+<a href="about.html" style="background:#ffcc70;color:#003a70;">About</a>
+<a href="contact.html">Contact</a>
+</nav>
 </header>
 
 <!-- HERO -->
 <div class="hero">
 <div>
-<h1>We Help Students Find Better Homes</h1>
-<p>Safe • Affordable • Verified Accommodation Across the UK</p>
+<h1>Helping Students Find Safe & Affordable Homes</h1>
+<p>Verified accommodation across the UK near top universities</p>
 </div>
 </div>
+
+<div class="container">
 
 <!-- ABOUT -->
 <div class="section">
 <h2>Who We Are</h2>
-<p>We connect students with safe and affordable rooms across the UK.</p>
+<p>UniHomes connects students with trusted and affordable accommodation across the UK.</p>
 
-<div class="box">10,000+ Students</div>
-<div class="box">2,000+ Rooms</div>
-<div class="box">50+ Cities</div>
+<div class="grid">
+<div class="card">10,000+ Students</div>
+<div class="card">2,000+ Rooms</div>
+<div class="card">50+ Cities</div>
+</div>
 </div>
 
-<!-- FEATURES -->
+<!-- WHY US -->
 <div class="section">
 <h2>Why Choose Us</h2>
 
-<div class="box">✔ Verified Rooms</div>
-<div class="box">✔ Affordable Prices</div>
-<div class="box">✔ Easy Booking</div>
-<div class="box">✔ 24/7 Support</div>
-
-<!-- TRUSTED BADGES -->
-<div class="trusted">
-<h3>Trusted By</h3>
-<span>Students UK</span>
-<span>University Housing Network</span>
-<span>UK Property Trust</span>
+<div class="grid">
+<div class="card">✔ Verified Properties</div>
+<div class="card">✔ Affordable Prices</div>
+<div class="card">✔ Easy Booking</div>
+<div class="card">✔ 24/7 Support</div>
 </div>
 
+<div class="badges">
+<span>Trusted Students UK</span>
+<span>University Housing Network</span>
+<span>UK Property Partners</span>
+</div>
 </div>
 
 <!-- HOW IT WORKS -->
@@ -224,19 +257,9 @@ UniHomes - About Us
 <h2>How It Works</h2>
 
 <div class="timeline">
-
-<div class="timeline-item" onclick="goSearch()">
-<b>1. Search</b> – Find rooms near your university.
-</div>
-
-<div class="timeline-item" onclick="goRooms()">
-<b>2. Compare</b> – Check rooms & prices.
-</div>
-
-<div class="timeline-item" onclick="goRooms('book')">
-<b>3. Book</b> – Secure your room.
-</div>
-
+<div class="step"><b>1. Search</b> – Find rooms near your university.</div>
+<div class="step"><b>2. Compare</b> – View options easily.</div>
+<div class="step"><b>3. Book</b> – Secure your room online.</div>
 </div>
 </div>
 
@@ -246,73 +269,43 @@ UniHomes - About Us
 <p>To make student housing simple, safe, and stress-free across the UK.</p>
 </div>
 
-<!-- =========================
-     PARTNERS MARQUEE
-========================= -->
-<div class="partners-wrapper">
-
-<div class="partners-title">
-Collaboration & Branding Partners
 </div>
 
-<div class="partners-track">
+<!-- PARTNERS -->
+<div class="partners">
+<h3 style="text-align:center;">Our Partners</h3>
 
+<div class="track">
 <a class="partner" href="https://www.hunters.com" target="_blank">HUNTERS</a>
 <a class="partner" href="https://www.foxtons.co.uk" target="_blank">FOXTONS</a>
 <a class="partner" href="https://www.savills.co.uk" target="_blank">SAVILLS</a>
 <a class="partner" href="https://www.dexters.co.uk" target="_blank">DEXTERS</a>
 <a class="partner" href="https://www.knightfrank.co.uk" target="_blank">KNIGHT FRANK</a>
-
-<!-- duplicate for smooth loop -->
-<a class="partner" href="https://www.hunters.com" target="_blank">HUNTERS</a>
-<a class="partner" href="https://www.foxtons.co.uk" target="_blank">FOXTONS</a>
-<a class="partner" href="https://www.savills.co.uk" target="_blank">SAVILLS</a>
-<a class="partner" href="https://www.dexters.co.uk" target="_blank">DEXTERS</a>
-<a class="partner" href="https://www.knightfrank.co.uk" target="_blank">KNIGHT FRANK</a>
-
 </div>
 </div>
 
 <footer>
-© 2026 UniHomes. All rights reserved.
+© 2026 UniHomes. All Rights Reserved.
 </footer>
 
-<!-- JS -->
+<!-- FADE IN SCRIPT -->
 <script>
-
-// FADE IN ON SCROLL
 const sections = document.querySelectorAll('.section');
 
 function reveal(){
-    const trigger = window.innerHeight * 0.8;
+const trigger = window.innerHeight * 0.85;
 
-    sections.forEach(sec => {
-        const top = sec.getBoundingClientRect().top;
+sections.forEach(sec => {
+const top = sec.getBoundingClientRect().top;
 
-        if(top < trigger && top > -200){
-            sec.classList.add("show");
-        } else {
-            sec.classList.remove("show");
-        }
-    });
+if(top < trigger){
+sec.classList.add("show");
+}
+});
 }
 
 window.addEventListener("scroll", reveal);
 reveal();
-
-// NAVIGATION
-function goSearch(){
-    window.location.href = "index.html?openSearch=true";
-}
-
-function goRooms(action){
-    if(action === "book"){
-        window.location.href = "rooms.html?book=true";
-    } else {
-        window.location.href = "rooms.html";
-    }
-}
-
 </script>
 
 </body>
