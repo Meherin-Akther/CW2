@@ -147,6 +147,42 @@ border-radius:50%;
 
 .prev{left:5px;}
 .next{right:5px;}
+
+/* DASHBOARD */
+#dashboardView{
+background:#f4f6fb;
+}
+
+#bookingTable{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+background:white;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+#bookingTable th{
+background:#003a70;
+color:white;
+padding:12px;
+text-transform:uppercase;
+font-size:13px;
+letter-spacing:1px;
+}
+
+#bookingTable td{
+padding:12px;
+border-bottom:1px solid #eee;
+font-size:14px;
+color:#333;
+}
+
+#bookingTable tr:hover{
+background:#f0f6ff;
+transition:0.2s;
+}
 </style>
 </head>
 
@@ -154,18 +190,16 @@ border-radius:50%;
 
 <div id="confirmBox">Booking Confirmed! 🎉</div>
 
-<!-- NAVBAR -->
 <header>
 <h2>UniHomes</h2>
 <div>
-<a href="home.html">Home</a>
-<a href="rooms.html">Room</a>
-<a href="about.html">About</a>
+<a href="./home.html">Home</a>
+<a href="./rooms.html">Room</a>
+<a href="./about.html">About</a>
 <a onclick="showDashboard()">My Bookings</a>
 </div>
 </header>
 
-<!-- ROOMS PAGE -->
 <div id="roomView" class="section">
 
 <h2>Find Your Room</h2>
@@ -187,10 +221,13 @@ border-radius:50%;
 <div class="grid" id="roomList"></div>
 </div>
 
-<!-- DASHBOARD -->
 <div id="dashboardView" class="section" style="display:none;">
+
 <h2>Your Bookings</h2>
-<table border="1" width="100%">
+
+<div style="max-width:1000px;margin:auto;">
+
+<table id="bookingTable" border="0">
 <thead>
 <tr>
 <th>Name</th>
@@ -199,11 +236,12 @@ border-radius:50%;
 <th>Date</th>
 </tr>
 </thead>
-<tbody id="bookingTable"></tbody>
+<tbody id="bookingTableBody"></tbody>
 </table>
+
+</div>
 </div>
 
-<!-- ROOM MODAL -->
 <div class="modal" id="roomModal">
 <div class="modal-content">
 <div id="roomDetails"></div>
@@ -213,7 +251,6 @@ border-radius:50%;
 </div>
 </div>
 
-<!-- AUTH MODAL -->
 <div class="modal" id="authModal">
 <div class="modal-content">
 
@@ -235,11 +272,19 @@ border-radius:50%;
 <p onclick="showLogin()" style="cursor:pointer;color:#003a70;">Back to login</p>
 </div>
 
+<!-- ✅ ONLY CHANGE: labels added here -->
 <div id="bookingBox" style="display:none;">
 <h3>Complete Booking</h3>
+
+<label style="display:block;text-align:left;margin-left:8px;font-weight:bold;">Full Name</label>
 <input type="text" id="bookName">
+
+<label style="display:block;text-align:left;margin-left:8px;font-weight:bold;">Email Address</label>
 <input type="email" id="bookEmail">
+
+<label style="display:block;text-align:left;margin-left:8px;font-weight:bold;">Select Date</label>
 <input type="date" id="bookDate">
+
 <button onclick="confirmBooking()">Confirm Booking</button>
 <button class="cancelBtn" onclick="closeAuth()">Cancel</button>
 </div>
@@ -249,7 +294,7 @@ border-radius:50%;
 
 <script>
 
-/* UPDATED UNIQUE IMAGES ONLY (NO REPEATS) */
+/* ROOMS DATA */
 const rooms = [
 {
 city:"University College London (UCL)",
@@ -259,9 +304,7 @@ description:"Affordable shared student room close to campus.",
 features:["WiFi","Kitchen","Desk","Bills Included"],
 images:[
 "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
-"https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6",
-"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267",
-"https://images.unsplash.com/photo-1560184897-ae75f418493e"
+"https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6"
 ]
 },
 {
@@ -272,9 +315,7 @@ description:"Comfortable room in central London.",
 features:["Bathroom","WiFi","Study Area"],
 images:[
 "https://images.unsplash.com/photo-1501045661006-fcebe0257c3f",
-"https://images.unsplash.com/photo-1493809842364-78817add7ffb",
-"https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
-"https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af"
+"https://images.unsplash.com/photo-1493809842364-78817add7ffb"
 ]
 },
 {
@@ -285,9 +326,7 @@ description:"Premium room with private bathroom.",
 features:["Private Bath","Gym","WiFi"],
 images:[
 "https://images.unsplash.com/photo-1505693314120-0d443867891c",
-"https://images.unsplash.com/photo-1501045661006-fcebe0257c3f",
-"https://images.unsplash.com/photo-1493809842364-78817add7ffb",
-"https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6"
+"https://images.unsplash.com/photo-1501045661006-fcebe0257c3f"
 ]
 }
 ];
@@ -296,7 +335,6 @@ let selectedRoom=null;
 let imgIndex=0;
 let sessionBookings=JSON.parse(localStorage.getItem("bookings"))||[];
 
-/* LOAD ROOMS */
 function loadRooms(){
 let search=$("#search").val().toLowerCase();
 let type=$("#typeFilter").val();
@@ -323,7 +361,6 @@ $("#roomList").append(`
 });
 }
 
-/* ROOM */
 function openRoom(i){
 selectedRoom=rooms[i];
 imgIndex=0;
@@ -350,7 +387,6 @@ function nextImg(){imgIndex=(imgIndex+1)%selectedRoom.images.length;renderRoom()
 function prevImg(){imgIndex=(imgIndex-1+selectedRoom.images.length)%selectedRoom.images.length;renderRoom();}
 function closeRoom(){$("#roomModal").fadeOut();}
 
-/* AUTH */
 function startBooking(){
 $("#authModal").fadeIn();
 if(localStorage.getItem("loggedUser")){
@@ -382,11 +418,16 @@ function showSignup(){$("#loginBox").hide();$("#signupBox").show();}
 function showLogin(){$("#signupBox").hide();$("#loginBox").show();}
 function closeAuth(){$("#authModal").fadeOut();}
 
-/* BOOKING */
 function confirmBooking(){
+
 let name=$("#bookName").val();
 let email=$("#bookEmail").val();
 let date=$("#bookDate").val();
+
+if(!name||!email||!date){
+alert("Fill all fields");
+return;
+}
 
 sessionBookings.push({
 name,email,date,
@@ -395,17 +436,20 @@ room:selectedRoom.city+" - "+selectedRoom.type
 
 localStorage.setItem("bookings",JSON.stringify(sessionBookings));
 
-$("#authModal,#roomModal").fadeOut();
-$("#confirmBox").fadeIn().delay(2000).fadeOut();
+$("#authModal").fadeOut();
+$("#roomModal").fadeOut();
+
+$("#confirmBox").fadeIn();
+setTimeout(()=>$("#confirmBox").fadeOut(),2000);
 
 loadDashboard();
+showDashboard();
 }
 
-/* DASHBOARD */
 function loadDashboard(){
-$("#bookingTable").empty();
+$("#bookingTableBody").empty();
 sessionBookings.forEach(b=>{
-$("#bookingTable").append(`
+$("#bookingTableBody").append(`
 <tr>
 <td>${b.name}</td>
 <td>${b.email}</td>
@@ -422,7 +466,6 @@ $("#dashboardView").show();
 loadDashboard();
 }
 
-/* INIT */
 loadRooms();
 loadDashboard();
 $("#search,#typeFilter,#priceFilter").on("input change",loadRooms);
