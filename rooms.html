@@ -233,8 +233,8 @@ button{
 
 <div id="loginBox">
 <h3>Login</h3>
-<input type="text" id="loginUser">
-<input type="password" id="loginPass">
+<input type="text" id="loginUser" placeholder="Enter your username">
+<input type="password" id="loginPass" placeholder="Enter your password">
 <button onclick="login()">Login</button>
 <button class="cancelBtn" onclick="closeAuth()">Cancel</button>
 <p onclick="showSignup()" style="cursor:pointer;color:#003a70;">Create account</p>
@@ -242,14 +242,13 @@ button{
 
 <div id="signupBox" style="display:none;">
 <h3>Sign Up</h3>
-<input type="text" id="signupUser">
-<input type="password" id="signupPass">
+<input type="text" id="signupUser" placeholder="Create a username">
+<input type="password" id="signupPass" placeholder="Create a password">
 <button onclick="signup()">Sign Up</button>
 <button class="cancelBtn" onclick="closeAuth()">Cancel</button>
 <p onclick="showLogin()" style="cursor:pointer;color:#003a70;">Back to login</p>
 </div>
 
-<!-- ✅ ONLY CHANGE -->
 <div id="bookingBox" style="display:none;">
 <h3>Complete Booking</h3>
 
